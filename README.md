@@ -2,7 +2,13 @@
 
 This is a tiny routing library for Java.
 
-## Dependencies
+## Synopsis
+
+	@FunctionalInterface
+	public interface WebAction {
+		void call(ServletRequest req, ServletResponse res);
+	}
+
 
 		// Create routing rules.
 		router = new WebRouter<WebAction>();
