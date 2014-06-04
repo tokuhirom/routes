@@ -4,11 +4,15 @@ This is a tiny routing library for Java.
 
 ## Synopsis
 
+
+### Your WebAction.java
+
 	@FunctionalInterface
 	public interface WebAction {
 		void call(ServletRequest req, ServletResponse res);
 	}
 
+### Your routing code.
 
 		// Create routing rules.
 		router = new WebRouter<WebAction>();
