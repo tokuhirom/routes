@@ -35,4 +35,4 @@ This is a tiny routing library for Java.
 
 ## Dependencies
 
- * Java 1.7+
+ * Java 8
