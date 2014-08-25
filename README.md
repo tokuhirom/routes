@@ -1,5 +1,7 @@
 # Routes for Java
 
+[![Build Status](https://travis-ci.org/tokuhirom/routes.svg?branch=master)](https://travis-ci.org/tokuhirom/routes)
+
 This is a tiny routing library for Java.
 
 ## Synopsis
