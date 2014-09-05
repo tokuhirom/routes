@@ -15,6 +15,10 @@ public class WebRouter<T> {
 	public WebRouter() {
 		patterns = new ArrayList<HttpRoute<T>>();
 	}
+	
+	public boolean isEmpty() {
+		return patterns.isEmpty();
+	}
 
 	/**
 	 * Get the path information destination.
