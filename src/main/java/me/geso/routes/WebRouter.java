@@ -7,17 +7,17 @@ import java.util.List;
 public class WebRouter<T> {
 	@Override
 	public String toString() {
-		return "WebRouter [patterns=" + patterns + "]";
+		return "WebRouter [patterns=" + getPatterns() + "]";
 	}
 
-	public List<HttpRoute<T>> patterns;
+	private final List<HttpRoute<T>> patterns;
 
 	public WebRouter() {
 		patterns = new ArrayList<HttpRoute<T>>();
 	}
 	
 	public boolean isEmpty() {
-		return patterns.isEmpty();
+		return getPatterns().isEmpty();
 	}
 
 	/**
@@ -29,7 +29,7 @@ public class WebRouter<T> {
 	 */
 	public RoutingResult<T> match(final String method, final String path) {
 		RoutingResult<T> retval = null;
-		for (HttpRoute<T> route : patterns) {
+		for (HttpRoute<T> route : getPatterns()) {
 			RoutingResult<T> result = route.match(method, path);
 			if (result != null) {
 				retval = result;
@@ -72,7 +72,11 @@ public class WebRouter<T> {
 	 * @return
 	 */
 	public WebRouter<T> addRoute(final String path, final T destination, final List<String> methods) {
-		patterns.add(new HttpRoute<T>(path, destination, methods));
+		getPatterns().add(new HttpRoute<T>(path, destination, methods));
 		return this;
+	}
+
+	public List<HttpRoute<T>> getPatterns() {
+		return patterns;
 	}
 }
