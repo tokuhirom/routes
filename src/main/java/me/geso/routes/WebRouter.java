@@ -5,6 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class WebRouter<T> {
+	@Override
+	public String toString() {
+		return "WebRouter [patterns=" + patterns + "]";
+	}
+
 	public List<HttpRoute<T>> patterns;
 
 	public WebRouter() {
