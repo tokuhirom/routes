@@ -11,6 +11,12 @@ import java.util.List;
  * @param <T> type of the destination.
  */
 class HttpRoute<T> {
+	@Override
+	public String toString() {
+		return "HttpRoute [pathRoute=" + pathRoute + ", methods=" + methods
+				+ "]";
+	}
+
 	protected PathRoute<T> pathRoute;
 	protected List<String> methods;
 
