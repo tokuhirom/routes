@@ -9,6 +9,7 @@ import java.util.List;
  * @param <T> type of the destination.
  * @author tokuhirom
  */
+
 public class HttpRoute<T> {
 	@Override
 	public String toString() {
@@ -44,7 +45,7 @@ public class HttpRoute<T> {
 	/**
 	 * @param method
 	 * @param path
-	 * @return instance of RoutingResult<T>, null if not matched.
+	 * @return instance of {@code RoutingResult<T>}, null if not matched.
 	 */
 	public RoutingResult<T> match(String method, String path) {
 		RoutingResult<T> result = pathRoute.match(path);
