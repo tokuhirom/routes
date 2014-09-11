@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 public class PathRoute<T> {
 	protected Pattern pattern;
+
 	protected T destination;
 	protected List<String> namedGroups = new ArrayList<>();
 
@@ -64,4 +65,9 @@ public class PathRoute<T> {
 		}
 		return null;
 	}
+
+	public T getDestination() {
+		return destination;
+	}
+
 }

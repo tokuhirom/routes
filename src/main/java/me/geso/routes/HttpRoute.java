@@ -5,10 +5,9 @@ import java.util.List;
 
 /**
  * HTTP route.
- * 
- * @author tokuhirom
  *
  * @param <T> type of the destination.
+ * @author tokuhirom
  */
 public class HttpRoute<T> {
 	@Override
@@ -17,12 +16,14 @@ public class HttpRoute<T> {
 				+ "]";
 	}
 
-	protected PathRoute<T> pathRoute;
-	protected List<String> methods;
+
+	private final PathRoute<T> pathRoute;
+
+	private final List<String> methods;
 
 	/**
 	 * Create new instance.
-	 *  
+	 *
 	 * @param path
 	 * @param destination
 	 * @param methods
@@ -32,8 +33,15 @@ public class HttpRoute<T> {
 		this.methods = methods;
 	}
 
+	public List<String> getMethods() {
+		return methods;
+	}
+
+	public PathRoute<T> getPathRoute() {
+		return pathRoute;
+	}
+
 	/**
-	 * 
 	 * @param method
 	 * @param path
 	 * @return instance of RoutingResult<T>, null if not matched.
