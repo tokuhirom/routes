@@ -6,10 +6,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PathRoute<T> {
-	protected Pattern pattern;
+	private final String path;
+	private final Pattern pattern;
 
-	protected T destination;
-	protected List<String> namedGroups = new ArrayList<>();
+	private T destination;
+	private List<String> namedGroups = new ArrayList<>();
 
 	static private String starKey = "SSSstarSSS";
 
@@ -21,6 +22,7 @@ public class PathRoute<T> {
 			escapePatternRe));
 
 	public PathRoute(String path, T destination) {
+		this.path = path;
 		this.pattern = Pattern.compile(compileToRegexp(path));
 		this.destination = destination;
 	}
@@ -69,5 +71,10 @@ public class PathRoute<T> {
 	public T getDestination() {
 		return destination;
 	}
+
+	public String getPath() {
+		return path;
+	}
+
 
 }
