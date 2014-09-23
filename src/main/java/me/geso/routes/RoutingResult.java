@@ -1,12 +1,13 @@
 package me.geso.routes;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
 public class RoutingResult<T> {
 	protected boolean methodAllowed;
 	T destination;
-	Map<String, String> captured = new TreeMap<>();
+	Map<String, String> captured = new LinkedHashMap<>(); // It should be insertion-ordered for testing.
 
 	/**
 	 * This method returns true if it denied by HTTP method mismatch.
