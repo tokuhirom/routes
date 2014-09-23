@@ -1,6 +1,11 @@
 package me.geso.routes;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+
+import java.util.LinkedHashMap;
 
 import org.junit.Test;
 
@@ -9,12 +14,11 @@ public class PathRouteTest {
 	@Test
 	public void test() {
 		PathRoute<String> route = new PathRoute<String>("/", "Root");
-		RoutingResult<String> match = route.match("/");
-		assertNotNull(match);
-		assertTrue(match.methodAllowed());
-		assertEquals("Root", match.getDestination());
+		LinkedHashMap<String, String> captured = new LinkedHashMap<>();
+		boolean matched = route.match("/", captured);
+		assertThat(matched, is(true));
 	}
-	
+
 	@Test
 	public void testCompileToRegexp() {
 		PathRoute<String> route = new PathRoute<String>("/", "Root");
@@ -26,21 +30,19 @@ public class PathRouteTest {
 	@Test
 	public void testCapture() {
 		PathRoute<String> route = new PathRoute<String>("/{id}", "Detail");
-		RoutingResult<String> match = route.match("/5963");
-		assertNotNull(match);
-		assertTrue(match.methodAllowed());
-		assertEquals("Detail", match.getDestination());
-		assertEquals("5963", match.getCaptured().get("id"));
+		LinkedHashMap<String, String> captured = new LinkedHashMap<>();
+		boolean matched = route.match("/5963", captured);
+		assertTrue(matched);
+		assertThat(captured, is(K.<String, String> map("id", "5963")));
 	}
 
 	@Test
 	public void testCaptureFoo() {
 		PathRoute<String> route = new PathRoute<String>("/foo/*", "Detail");
-		RoutingResult<String> match = route.match("/foo/bar/baz");
-		assertNotNull(match);
-		assertTrue(match.methodAllowed());
-		assertEquals("Detail", match.getDestination());
-		assertEquals("bar/baz", match.getCaptured().get("*"));
+		LinkedHashMap<String, String> captured = new LinkedHashMap<>();
+		boolean matched = route.match("/foo/bar/baz", captured);
+		assertTrue(matched);
+		assertThat(captured, is(K.<String, String> map("*", "bar/baz")));
 	}
 
 }

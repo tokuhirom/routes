@@ -1,12 +1,13 @@
 package me.geso.routes;
 
-
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
  * HTTP route.
  *
- * @param <T> type of the destination.
+ * @param <T>
+ *            type of the destination.
  * @author tokuhirom
  */
 
@@ -16,7 +17,6 @@ public class HttpRoute<T> {
 		return "HttpRoute [pathRoute=" + pathRoute + ", methods=" + methods
 				+ "]";
 	}
-
 
 	private final PathRoute<T> pathRoute;
 
@@ -38,8 +38,12 @@ public class HttpRoute<T> {
 		return methods;
 	}
 
-	public PathRoute<T> getPathRoute() {
-		return pathRoute;
+	public T getDestination() {
+		return pathRoute.getDestination();
+	}
+
+	public String getPath() {
+		return pathRoute.getPath();
 	}
 
 	/**
@@ -48,10 +52,12 @@ public class HttpRoute<T> {
 	 * @return instance of {@code RoutingResult<T>}, null if not matched.
 	 */
 	public RoutingResult<T> match(String method, String path) {
-		RoutingResult<T> result = pathRoute.match(path);
-		if (result != null) {
-			result.methodAllowed = methods.contains(method);
-			return result;
+		// It should be insertion ordered for testing.
+		LinkedHashMap<String, String> captured = new LinkedHashMap<>();
+		if (pathRoute.match(path, captured)) {
+			boolean methodAllowed = methods.contains(method);
+			return new RoutingResult<T>(methodAllowed,
+					pathRoute.getDestination(), captured);
 		} else {
 			return null;
 		}

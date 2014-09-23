@@ -2,15 +2,21 @@ package me.geso.routes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PathRoute<T> {
+/**
+ * Do not use directly.
+ *
+ * @param <T>
+ */
+class PathRoute<T> {
 	private final String path;
 	private final Pattern pattern;
 
-	private T destination;
-	private List<String> namedGroups = new ArrayList<>();
+	private final T destination;
+	private final List<String> namedGroups = new ArrayList<>();
 
 	static private String starKey = "SSSstarSSS";
 
@@ -21,7 +27,7 @@ public class PathRoute<T> {
 			"(%s)|(%s)|(%s)", braceNormalPatternRe, starPatternRe,
 			escapePatternRe));
 
-	public PathRoute(String path, T destination) {
+	PathRoute(String path, T destination) {
 		this.path = path;
 		this.pattern = Pattern.compile(compileToRegexp(path));
 		this.destination = destination;
@@ -53,28 +59,24 @@ public class PathRoute<T> {
 		return sb.toString();
 	}
 
-	public RoutingResult<T> match(String path) {
+	boolean match(final String path, final Map<String, String> captured) {
 		Matcher m = pattern.matcher(path);
 		if (m.matches()) {
-			RoutingResult<T> result = new RoutingResult<T>();
-			result.methodAllowed = true;
-			result.destination = this.destination;
 			for (String name : namedGroups) {
 				String key = name.equals(starKey) ? "*" : name;
-				result.putCaptured(key, m.group(name));
+				captured.put(key, m.group(name));
 			}
-			return result;
+			return true;
 		}
-		return null;
+		return false;
 	}
 
-	public T getDestination() {
+	T getDestination() {
 		return destination;
 	}
 
-	public String getPath() {
+	String getPath() {
 		return path;
 	}
-
 
 }
