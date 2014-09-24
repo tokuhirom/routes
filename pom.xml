@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>me.geso</groupId>
 	<artifactId>routes</artifactId>
-	<version>0.2.2-SNAPSHOT</version>
+	<version>0.3.8</version>
 	<name>routes</name>
 	<description>Tiny routing library for Java</description>
 
