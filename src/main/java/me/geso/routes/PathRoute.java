@@ -41,7 +41,7 @@ class PathRoute<T> {
 				// {foo}
 				namedGroups.add(m.group("braceName"));
 				String replace = "(?<" + m.group("braceName")
-						+ ">[a-zA-Z0-9]+)";
+						+ ">[a-zA-Z0-9._-]+)";
 				m.appendReplacement(sb, replace);
 			} else if (m.group(3) != null) {
 				namedGroups.add(starKey);

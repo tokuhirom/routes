@@ -37,6 +37,17 @@ public class PathRouteTest {
 	}
 
 	@Test
+	public void testCaptureLatLng() {
+		PathRoute<String> route = new PathRoute<String>("/{lat}/{lng}",
+				"Detail");
+		LinkedHashMap<String, String> captured = new LinkedHashMap<>();
+		boolean matched = route.match("/137.555/64.222", captured);
+		assertTrue(matched);
+		assertThat(captured,
+				is(K.<String, String> map("lat", "137.555", "lng", "64.222")));
+	}
+
+	@Test
 	public void testCaptureFoo() {
 		PathRoute<String> route = new PathRoute<String>("/foo/*", "Detail");
 		LinkedHashMap<String, String> captured = new LinkedHashMap<>();
