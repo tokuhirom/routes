@@ -24,7 +24,7 @@ public class PathRouteTest {
 		PathRoute<String> route = new PathRoute<String>("/", "Root");
 		assertEquals("/HO", route.compileToRegexp("/HO"));
 		assertEquals("/H\\.O", route.compileToRegexp("/H.O"));
-		assertEquals("/(?<id>[a-zA-Z0-9]+)", route.compileToRegexp("/{id}"));
+		assertEquals("/(?<id>[a-zA-Z0-9._-]+)", route.compileToRegexp("/{id}"));
 	}
 
 	@Test
