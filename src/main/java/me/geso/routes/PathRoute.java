@@ -22,6 +22,7 @@ class PathRoute<T> {
 
 	static private String braceNormalPatternRe = "\\{(?<braceName>[a-zA-Z_][a-zA-Z0-9_-]*)\\}";
 	static private String starPatternRe = "\\*";
+	// RegExp meta characters... We should escape these characters.
 	static private String escapePatternRe = "[\\-{}\\[\\]+?\\.,\\\\\\^$|#\\s]";
 	static private Pattern matchPattern = Pattern.compile(String.format(
 			"(%s)|(%s)|(%s)", braceNormalPatternRe, starPatternRe,
