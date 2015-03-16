@@ -2,6 +2,7 @@ package me.geso.routes;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -56,4 +57,20 @@ public class PathRouteTest {
 		assertThat(captured, is(K.<String, String> map("*", "bar/baz")));
 	}
 
+	@Test
+	public void testCaptureWithRegex() {
+		PathRoute<String> route = new PathRoute<String>("/{id:[a-zA-Z]{3}[0-9]{3}}/{title:\\\\w+}", "Detail");
+		LinkedHashMap<String, String> captured = new LinkedHashMap<>();
+		boolean matched = route.match("/aBc123/awesome_article", captured);
+		assertTrue(matched);
+		assertThat(captured, is(K.<String, String> map("id", "aBc123", "title", "awesome_article")));
+	}
+
+	@Test
+	public void testCaptureWithRegexAndNotMatcher() {
+		PathRoute<String> route = new PathRoute<String>("/{id:[0-9]{2}}", "Detail");
+		LinkedHashMap<String, String> captured = new LinkedHashMap<>();
+		boolean matched = route.match("/123", captured);
+		assertFalse(matched);
+	}
 }

@@ -44,6 +44,10 @@ Will match `%r{^/member/[a-zA-Z0-9._-]+$}`.
 
 Will match `%r{^/download/.*$}`.
 
+### `/blog/{articleId:[0-9]+}`
+
+Will match `%r{^/blog/[0-9]+$}`. You can specify a path as regular expression.
+
 ## Dependencies
 
  * Java 8

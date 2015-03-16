@@ -22,11 +22,14 @@ class PathRoute<T> {
 
 	static private String braceNormalPatternRe = "\\{(?<braceName>[a-zA-Z_][a-zA-Z0-9_-]*)\\}";
 	static private String starPatternRe = "\\*";
+	// For named regexp matcher (e.g. /{id:[0-9]{5}}/{title:[a-zA-Z_]+})
+	static private String namedRegexMatcherPatternRe =
+		"\\{(?<regexName>[^:]+?):(?<regex>.+?)\\}(?<delimiter>/|$)";
 	// RegExp meta characters... We should escape these characters.
 	static private String escapePatternRe = "[\\-{}\\[\\]+?\\.,\\\\\\^$|#\\s]";
 	static private Pattern matchPattern = Pattern.compile(String.format(
-			"(%s)|(%s)|(%s)", braceNormalPatternRe, starPatternRe,
-			escapePatternRe));
+			"(%s)|(%s)|(%s)|(%s)", braceNormalPatternRe, starPatternRe,
+			namedRegexMatcherPatternRe, escapePatternRe));
 
 	PathRoute(String path, T destination) {
 		this.path = path;
@@ -48,9 +51,19 @@ class PathRoute<T> {
 				namedGroups.add(starKey);
 				String replace = String.format("(?<%s>.+)", starKey);
 				m.appendReplacement(sb, replace);
-			} else if (m.group(4) != null) {
+			} else if (m.group(5) != null) {
+				namedGroups.add(m.group("regexName"));
+				String delimiter = m.group("delimiter").equals("/") ? "/" : "";
+				m.appendReplacement(sb, new StringBuilder("(?<")
+					.append(m.group("regexName"))
+					.append(">")
+					.append(m.group("regex"))
+					.append(")")
+					.append(delimiter)
+					.toString());
+			} else if (m.group(8) != null) {
 				// foo.bar ... needs escape meta character
-				String replace = "\\\\" + m.group(4);
+				String replace = "\\\\" + m.group(8);
 				m.appendReplacement(sb, replace);
 			} else {
 				throw new RuntimeException();
