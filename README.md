@@ -34,6 +34,15 @@ This is a tiny routing library for Java.
 			return res404();
 		}
 
+## Path Patterns
+
+### `/member/{memberId}`
+
+Will match `%r{^/member/[a-zA-Z0-9._-]+$}`.
+
+### `/download/*`
+
+Will match `%r{^/download/.*$}`.
 
 ## Dependencies
 
