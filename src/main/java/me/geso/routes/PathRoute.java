@@ -18,18 +18,21 @@ class PathRoute<T> {
 	private final T destination;
 	private final List<String> namedGroups = new ArrayList<>();
 
-	static private String starKey = "SSSstarSSS";
+	private static final String starKey = "SSSstarSSS";
 
-	static private String braceNormalPatternRe = "\\{(?<braceName>[a-zA-Z_][a-zA-Z0-9_-]*)\\}";
-	static private String starPatternRe = "\\*";
+	private static final String braceNormalPatternRe = "\\{(?<braceName>[a-zA-Z_][a-zA-Z0-9_-]*)\\}";
+	private static final String starPatternRe = "\\*";
 	// For named regexp matcher (e.g. /{id:[0-9]{5}}/{title:[a-zA-Z_]+})
-	static private String namedRegexMatcherPatternRe =
+	private static final String namedRegexMatcherPatternRe =
 		"\\{(?<regexName>[^:]+?):(?<regex>.+?)\\}(?<delimiter>/|$)";
 	// RegExp meta characters... We should escape these characters.
-	static private String escapePatternRe = "[\\-{}\\[\\]+?\\.,\\\\\\^$|#\\s]";
-	static private Pattern matchPattern = Pattern.compile(String.format(
-			"(%s)|(%s)|(%s)|(%s)", braceNormalPatternRe, starPatternRe,
-			namedRegexMatcherPatternRe, escapePatternRe));
+	private static final String escapePatternRe = "[\\-{}\\[\\]+?\\.,\\\\\\^$|#\\s]";
+	private static final Pattern matchPattern = Pattern.compile(
+			"(" + braceNormalPatternRe + ")" + "|"
+			+ "(" + starPatternRe + ")" + "|"
+			+ "(" + namedRegexMatcherPatternRe + ")" + "|"
+			+ "(" + escapePatternRe + ")"
+	);
 
 	PathRoute(String path, T destination) {
 		this.path = path;
@@ -49,7 +52,7 @@ class PathRoute<T> {
 				m.appendReplacement(sb, replace);
 			} else if (m.group(3) != null) {
 				namedGroups.add(starKey);
-				String replace = String.format("(?<%s>.+)", starKey);
+				String replace = "(?<" + starKey + ">.+)";
 				m.appendReplacement(sb, replace);
 			} else if (m.group(4) != null) {
 				namedGroups.add(m.group("regexName"));
