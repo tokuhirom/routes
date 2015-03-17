@@ -46,7 +46,7 @@ Will match `%r{^/download/.*$}`.
 
 ### `/blog/{articleId:[0-9]+}`
 
-Will match `%r{^/blog/[0-9]+$}`. You can specify a path as regular expression.
+Will match `%r{^/blog/[0-9]+$}`. You can specify regular expression as a path.
 
 ## Dependencies
 
