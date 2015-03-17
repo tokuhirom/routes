@@ -51,7 +51,7 @@ class PathRoute<T> {
 				namedGroups.add(starKey);
 				String replace = String.format("(?<%s>.+)", starKey);
 				m.appendReplacement(sb, replace);
-			} else if (m.group(5) != null) {
+			} else if (m.group(4) != null) {
 				namedGroups.add(m.group("regexName"));
 				String delimiter = m.group("delimiter").equals("/") ? "/" : "";
 				m.appendReplacement(sb, new StringBuilder("(?<")
