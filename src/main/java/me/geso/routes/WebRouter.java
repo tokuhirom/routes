@@ -16,7 +16,7 @@ public class WebRouter<T> implements Serializable {
 	private final List<HttpRoute<T>> patterns;
 
 	public WebRouter() {
-		patterns = new ArrayList<HttpRoute<T>>();
+		patterns = new ArrayList<>();
 	}
 	
 	public boolean isEmpty() {
@@ -75,7 +75,7 @@ public class WebRouter<T> implements Serializable {
 	 * @return
 	 */
 	public WebRouter<T> addRoute(final String path, final T destination, final List<String> methods) {
-		getPatterns().add(new HttpRoute<T>(path, destination, methods));
+		getPatterns().add(new HttpRoute<>(path, destination, methods));
 		return this;
 	}
 

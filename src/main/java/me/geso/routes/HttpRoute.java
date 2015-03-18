@@ -56,7 +56,7 @@ public class HttpRoute<T> {
 		LinkedHashMap<String, String> captured = new LinkedHashMap<>();
 		if (pathRoute.match(path, captured)) {
 			boolean methodAllowed = methods.contains(method);
-			return new RoutingResult<T>(methodAllowed,
+			return new RoutingResult<>(methodAllowed,
 					pathRoute.getDestination(), captured);
 		} else {
 			return null;

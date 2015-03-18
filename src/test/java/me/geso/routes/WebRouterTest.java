@@ -2,16 +2,13 @@ package me.geso.routes;
 
 import static org.junit.Assert.*;
 
-import me.geso.routes.RoutingResult;
-import me.geso.routes.WebRouter;
-
 import org.junit.Test;
 
 public class WebRouterTest {
 
 	@Test
 	public void test() {
-		WebRouter<String> router = new WebRouter<String>();
+		WebRouter<String> router = new WebRouter<>();
 		router.get("/", "root");
 		RoutingResult<String> match = router.match("GET", "/");
 		assertNotNull(match);
@@ -21,7 +18,7 @@ public class WebRouterTest {
 
 	@Test
 	public void testMethodNotAllowed() {
-		WebRouter<String> router = new WebRouter<String>();
+		WebRouter<String> router = new WebRouter<>();
 		router.get("/", "root");
 		{
 			RoutingResult<String> match = router.match("HEAD", "/");
@@ -43,7 +40,7 @@ public class WebRouterTest {
 
 	@Test
 	public void testOrder() {
-		WebRouter<String> router = new WebRouter<String>();
+		WebRouter<String> router = new WebRouter<>();
 		router.get("/", "root");
 		router.get("/", "root2");
 
@@ -54,7 +51,7 @@ public class WebRouterTest {
 
 	@Test
 	public void testSecondPost() {
-		WebRouter<String> router = new WebRouter<String>();
+		WebRouter<String> router = new WebRouter<>();
 		router.get("/", "getRoot");
 		router.post("/", "postRoot");
 
