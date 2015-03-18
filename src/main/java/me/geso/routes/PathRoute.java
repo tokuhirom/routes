@@ -57,13 +57,7 @@ class PathRoute<T> {
 			} else if (m.group(4) != null) {
 				namedGroups.add(m.group("regexName"));
 				String delimiter = m.group("delimiter").equals("/") ? "/" : "";
-				m.appendReplacement(sb, new StringBuilder("(?<")
-					.append(m.group("regexName"))
-					.append(">")
-					.append(m.group("regex"))
-					.append(")")
-					.append(delimiter)
-					.toString());
+				m.appendReplacement(sb, "(?<" + m.group("regexName") + ">" + m.group("regex") + ")" + delimiter);
 			} else if (m.group(8) != null) {
 				// foo.bar ... needs escape meta character
 				String replace = "\\\\" + m.group(8);
