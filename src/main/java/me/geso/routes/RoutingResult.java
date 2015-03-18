@@ -4,9 +4,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class RoutingResult<T> {
-	protected boolean methodAllowed;
-	T destination;
-	Map<String, String> captured;
+	protected final boolean methodAllowed;
+	private final T destination;
+	private final Map<String, String> captured;
 
 	public RoutingResult(boolean methodAllowed, T destination,
 			LinkedHashMap<String, String> captured) {
@@ -32,10 +32,6 @@ public class RoutingResult<T> {
 	 */
 	public T getDestination() {
 		return destination;
-	}
-
-	void putCaptured(String name, String group) {
-		captured.put(name, group);
 	}
 
 	/**
