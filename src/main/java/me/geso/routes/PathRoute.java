@@ -18,20 +18,20 @@ class PathRoute<T> {
 	private final T destination;
 	private final List<String> namedGroups = new ArrayList<>();
 
-	private static final String starKey = "SSSstarSSS";
+	private static final String STAR_KEY = "SSSstarSSS";
 
-	private static final String braceNormalPatternRe = "\\{(?<braceName>[a-zA-Z_][a-zA-Z0-9_-]*)\\}";
-	private static final String starPatternRe = "\\*";
+	private static final String BRACE_NORMAL_PATTERN_RE = "\\{(?<braceName>[a-zA-Z_][a-zA-Z0-9_-]*)\\}";
+	private static final String STAR_PATTERN_RE = "\\*";
 	// For named regexp matcher (e.g. /{id:[0-9]{5}}/{title:[a-zA-Z_]+})
-	private static final String namedRegexMatcherPatternRe =
+	private static final String NAMED_REGEX_MATCHER_PATTERN_RE =
 		"\\{(?<regexName>[^:]+?):(?<regex>.+?)\\}(?<delimiter>/|$)";
 	// RegExp meta characters... We should escape these characters.
-	private static final String escapePatternRe = "[\\-{}\\[\\]+?\\.,\\\\\\^$|#\\s]";
-	private static final Pattern matchPattern = Pattern.compile(
-			"(" + braceNormalPatternRe + ")" + "|"
-			+ "(" + starPatternRe + ")" + "|"
-			+ "(" + namedRegexMatcherPatternRe + ")" + "|"
-			+ "(" + escapePatternRe + ")"
+	private static final String ESCAPE_PATTERN_RE = "[\\-{}\\[\\]+?\\.,\\\\\\^$|#\\s]";
+	private static final Pattern MATCH_PATTERN = Pattern.compile(
+			"(" + BRACE_NORMAL_PATTERN_RE + ")" + "|"
+			+ "(" + STAR_PATTERN_RE + ")" + "|"
+			+ "(" + NAMED_REGEX_MATCHER_PATTERN_RE + ")" + "|"
+			+ "(" + ESCAPE_PATTERN_RE + ")"
 	);
 
 	PathRoute(String path, T destination) {
@@ -41,7 +41,7 @@ class PathRoute<T> {
 	}
 
 	String compileToRegexp(String path) {
-		Matcher m = matchPattern.matcher(path);
+		Matcher m = MATCH_PATTERN.matcher(path);
 		StringBuffer sb = new StringBuffer(path.length());
 		while (m.find()) {
 			if (m.group(1) != null) {
@@ -51,8 +51,8 @@ class PathRoute<T> {
 						+ ">[a-zA-Z0-9._-]+)";
 				m.appendReplacement(sb, replace);
 			} else if (m.group(3) != null) {
-				namedGroups.add(starKey);
-				String replace = "(?<" + starKey + ">.+)";
+				namedGroups.add(STAR_KEY);
+				String replace = "(?<" + STAR_KEY + ">.+)";
 				m.appendReplacement(sb, replace);
 			} else if (m.group(4) != null) {
 				namedGroups.add(m.group("regexName"));
@@ -74,7 +74,7 @@ class PathRoute<T> {
 		Matcher m = pattern.matcher(path);
 		if (m.matches()) {
 			for (String name : namedGroups) {
-				String key = name.equals(starKey) ? "*" : name;
+				String key = name.equals(STAR_KEY) ? "*" : name;
 				captured.put(key, m.group(name));
 			}
 			return true;
