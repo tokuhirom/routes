@@ -34,10 +34,6 @@ public class RoutingResult<T> {
 		return destination;
 	}
 
-	private void putCaptured(String name, String group) {
-		captured.put(name, group);
-	}
-
 	/**
 	 * Get captured variables in Map.
 	 * 
