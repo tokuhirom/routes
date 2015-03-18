@@ -31,17 +31,17 @@ public class WebRouter<T> implements Serializable {
 	 * @return
 	 */
 	public RoutingResult<T> match(final String method, final String path) {
-		RoutingResult<T> retval = null;
+		RoutingResult<T> routingResult = null;
 		for (HttpRoute<T> route : getPatterns()) {
 			RoutingResult<T> result = route.match(method, path);
 			if (result != null) {
-				retval = result;
-				if (retval.methodAllowed()) {
-					return retval;
+				routingResult = result;
+				if (routingResult.methodAllowed()) {
+					return routingResult;
 				}
 			}
 		}
-		return retval;
+		return routingResult;
 	}
 
 	/**
