@@ -1,6 +1,6 @@
 package me.geso.routes;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -43,8 +43,8 @@ public class K {
 	}
 
 	public static class ImmutablePair<A, B> implements Map.Entry<A, B> {
-		private A a;
-		private B b;
+		private final A a;
+		private final B b;
 
 		public ImmutablePair(A a, B b) {
 			this.a = a;
@@ -76,10 +76,6 @@ public class K {
 	 */
 	@SafeVarargs
 	public static <T> List<T> list(T... ts) {
-		List<T> list = new ArrayList<>();
-		for (T t : ts) {
-			list.add(t);
-		}
-		return Collections.unmodifiableList(list);
+		return Collections.unmodifiableList(Arrays.asList(ts));
 	}
 }
